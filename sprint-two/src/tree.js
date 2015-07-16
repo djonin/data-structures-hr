@@ -3,7 +3,8 @@ var Tree = function(value){
   newTree.value = value;
 
   // your code here
-  newTree.children = [];  // fix me
+  newTree.children = [];
+  newTree.parent = null;
 
   _.extend(newTree, treeMethods);
   return newTree;
@@ -12,7 +13,10 @@ var Tree = function(value){
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
-	this.children.push(Tree(value));
+	var tree = Tree(value);
+	tree.parent = this;
+
+	this.children.push(tree);
 };
 
 treeMethods.contains = function(target){
@@ -30,6 +34,16 @@ treeMethods.contains = function(target){
 	}
 	return recursiveSearch(this);
 };
+
+treeMethods.removeFromParent = function(){
+	for (var i =0; i < this.parent.children.length; i++){
+		if (this.parent.children[i] === this){
+			this.parent.children.splice(i);
+		}
+	}
+
+	this.parent = null;
+}
 
 
 /*
