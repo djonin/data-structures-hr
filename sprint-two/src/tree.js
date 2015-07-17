@@ -12,6 +12,13 @@ var Tree = function(value){
 
 var treeMethods = {};
 
+treeMethods.traverse = function(callback){
+	callback(this.value);
+	for(var i = 0; i<this.children.length; i++) {
+		this.children[i].traverse(callback);
+	}
+}
+
 treeMethods.addChild = function(value){
 	var tree = Tree(value);
 	tree.parent = this;
